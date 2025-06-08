@@ -5,20 +5,15 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.tmflix.R;
-//import com.example.tmflix2.notification.NotificationDailyReceiver;
-//import com.example.tmflix2.notification.NotificationReleaseReceiver;
 import com.example.tmflix.preference.SettingPreference;
 
 public class SettingActivity extends AppCompatActivity {
@@ -30,9 +25,9 @@ public class SettingActivity extends AppCompatActivity {
     // Theme components
     private RadioGroup rgThemeSelector;
     private RadioButton rbLightTheme, rbDarkTheme;
-    private SharedPreferences themePreferences;
-    private static final String THEME_PREF = "theme_pref";
-    private static final String THEME_KEY = "selected_theme";
+
+    // Flag untuk menghindari double toast
+    private boolean isThemeInitializing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +41,6 @@ public class SettingActivity extends AppCompatActivity {
         rgThemeSelector = findViewById(R.id.rgThemeSelector);
         rbLightTheme = findViewById(R.id.rbLightTheme);
         rbDarkTheme = findViewById(R.id.rbDarkTheme);
-        themePreferences = getSharedPreferences(THEME_PREF, MODE_PRIVATE);
 
         // Setup Toolbar
         toolbar.setTitle("");
@@ -56,8 +50,7 @@ public class SettingActivity extends AppCompatActivity {
 
         settingPreference = new SettingPreference(this);
 
-
-        // Setup theme selector, penting iniiiii
+        // Setup theme selector dan load theme
         setupThemeSelector();
         loadThemePreference();
 
@@ -68,43 +61,36 @@ public class SettingActivity extends AppCompatActivity {
         });
     }
 
-
-
     private void setupThemeSelector() {
         if (rgThemeSelector != null) {
-            rgThemeSelector.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    String selectedTheme;
+            rgThemeSelector.setOnCheckedChangeListener((group, checkedId) -> {
+                if (isThemeInitializing) return; // Mencegah pemanggilan dobel
 
-                    if (checkedId == R.id.rbDarkTheme) {
-                        selectedTheme = "dark";
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        Toast.makeText(getApplicationContext(), "Tema gelap diaktifkan", Toast.LENGTH_SHORT).show();
-                    } else {
-                        selectedTheme = "light";
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        Toast.makeText(getApplicationContext(), "Tema terang diaktifkan", Toast.LENGTH_SHORT).show();
-                    }
-
-                    // Simpan pilihan tema
-                    SharedPreferences.Editor editor = themePreferences.edit();
-                    editor.putString(THEME_KEY, selectedTheme);
-                    editor.apply();
+                String selectedTheme;
+                if (checkedId == R.id.rbDarkTheme) {
+                    selectedTheme = "dark";
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    Toast.makeText(getApplicationContext(), "Tema gelap diaktifkan", Toast.LENGTH_SHORT).show();
+                } else {
+                    selectedTheme = "light";
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    Toast.makeText(getApplicationContext(), "Tema terang diaktifkan", Toast.LENGTH_SHORT).show();
                 }
+                settingPreference.setSelectedTheme(selectedTheme);
             });
         }
     }
 
     private void loadThemePreference() {
-        if (themePreferences != null && rbLightTheme != null && rbDarkTheme != null) {
-            String savedTheme = themePreferences.getString(THEME_KEY, "light");
-
-            if (savedTheme.equals("dark")) {
+        if (rbLightTheme != null && rbDarkTheme != null) {
+            String savedTheme = settingPreference.getSelectedTheme();
+            isThemeInitializing = true; // Set flag agar saat setChecked tidak trigger listener
+            if ("dark".equals(savedTheme)) {
                 rbDarkTheme.setChecked(true);
             } else {
                 rbLightTheme.setChecked(true);
             }
+            isThemeInitializing = false; // Reset flag
         }
     }
 

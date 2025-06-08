@@ -119,6 +119,29 @@ public class FragmentMovie extends Fragment
         return rootView;
     }
 
+    // FIX: Tambahkan onDestroyView untuk menghindari memory leak dan dismiss dialog jika masih tampil
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        progressDialog = null;
+    }
+
+    // FIX: Gunakan method aman untuk show/dismiss progressDialog
+    private void safeShowProgressDialog() {
+        if (isAdded() && getActivity() != null && progressDialog != null && !progressDialog.isShowing()) {
+            progressDialog.show();
+        }
+    }
+
+    private void safeDismissProgressDialog() {
+        if (isAdded() && getActivity() != null && progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
     // Search Movie (tanpa pagination)
     private void setSearchMovie(String query) {
         progressDialog.show();
