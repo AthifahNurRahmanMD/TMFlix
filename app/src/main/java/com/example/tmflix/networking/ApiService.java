@@ -9,6 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+
 public interface ApiService {
     @GET(ApiConfig.MOVIE_VIDEO)
     Call<TrailerResponse> getMovieTrailers(
@@ -33,7 +34,8 @@ public interface ApiService {
     @GET(ApiConfig.MOVIE_POPULAR)
     Call<MovieResponse> getPopularMovies(
             @Query("api_key") String apiKey,
-            @Query("language") String language
+            @Query("language") String language,
+            @Query("page") int page
     );
 
     @GET(ApiConfig.SEARCH_MOVIE)
@@ -47,12 +49,14 @@ public interface ApiService {
     Call<TVResponse> getTVNowPlaying(
             @Query("api_key") String apiKey,
             @Query("language") String language
+
     );
 
     @GET(ApiConfig.TV_POPULAR)
     Call<TVResponse> getTVPopular(
             @Query("api_key") String apiKey,
-            @Query("language") String language
+            @Query("language") String language,
+            @Query("page") int page
     );
 
     @GET(ApiConfig.SEARCH_TV)
@@ -62,8 +66,5 @@ public interface ApiService {
             @Query("query") String query
     );
 
-
     Call<MovieResponse> getTodayReleases(String s, String s1, String todayDate, String todayDate1);
 }
-
-

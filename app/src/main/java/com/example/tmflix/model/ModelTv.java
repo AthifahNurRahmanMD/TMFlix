@@ -1,4 +1,4 @@
-package com.example.tmflix2.model;
+package com.example.tmflix.model;
 
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;

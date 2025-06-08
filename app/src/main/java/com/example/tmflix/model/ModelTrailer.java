@@ -1,4 +1,4 @@
-package com.example.tmflix2.model;
+package com.example.tmflix.model;
 
 import java.io.Serializable;
 
