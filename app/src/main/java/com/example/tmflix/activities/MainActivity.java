@@ -18,6 +18,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.tmflix.R;
+import com.example.tmflix.preference.SettingPreference;
 import com.example.tmflix.utils.BottomBarBehavior;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,11 +28,15 @@ public class MainActivity extends AppCompatActivity {
     View indicatorFilm, indicatorTV, indicatorFav;
 
     // Theme constants
-    private static final String THEME_PREF = "theme_pref";
-    private static final String THEME_KEY = "selected_theme";
+    private SettingPreference settingPreference;
+
+//    private static final String THEME_PREF = "theme_pref";
+//    private static final String THEME_KEY = "selected_theme";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        settingPreference = new SettingPreference(this);
+
         // Apply theme before setContentView
         applyTheme();
 
@@ -48,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
         }
 
-        // Tombol notifikasi
+        // Tombol notifikasi/pengaturan sih sebenarnya
         imgNotification = findViewById(R.id.imgNotification);
         imgNotification.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SettingActivity.class);
@@ -90,10 +95,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void applyTheme() {
         try {
-            SharedPreferences sharedPreferences = getSharedPreferences(THEME_PREF, MODE_PRIVATE);
-            String savedTheme = sharedPreferences.getString(THEME_KEY, "light");
-
-            if (savedTheme.equals("dark")) {
+            String savedTheme = settingPreference.getSelectedTheme(); // ✅ Diubah dari SharedPreferences ke SettingPreference
+            if ("dark".equals(savedTheme)) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -111,14 +114,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkThemeChange() {
         try {
-            SharedPreferences sharedPreferences = getSharedPreferences(THEME_PREF, MODE_PRIVATE);
-            String savedTheme = sharedPreferences.getString(THEME_KEY, "light");
-
+            String savedTheme = settingPreference.getSelectedTheme(); // pke SettingPreference
             boolean currentlyDark = (getResources().getConfiguration().uiMode &
                     android.content.res.Configuration.UI_MODE_NIGHT_MASK) ==
                     android.content.res.Configuration.UI_MODE_NIGHT_YES;
 
-            boolean shouldBeDark = savedTheme.equals("dark");
+            boolean shouldBeDark = savedTheme.equals("dark"); // klo null akan lempar ke nullpointer exception
+            // boolean shouldBeDark = "dark".equals(savedTheme); // klo null akan kembalikan false tanpa error
 
             if (currentlyDark != shouldBeDark) {
                 recreate();
