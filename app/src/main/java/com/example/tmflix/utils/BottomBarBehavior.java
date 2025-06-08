@@ -5,7 +5,6 @@ import android.view.View;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 
-
 public class BottomBarBehavior extends CoordinatorLayout.Behavior<View> {
 
     private int height;
