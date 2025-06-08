@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.tmflix.R;
+import com.example.tmflix.adapter.TrailerAdapter;
 import com.example.tmflix.model.ModelTrailer;
 import com.example.tmflix.model.ModelTv;
 import com.example.tmflix.model.TrailerResponse;
