@@ -1,3 +1,4 @@
+val TMDB_API_KEY: String = project.findProperty("TMDB_API_KEY") as String
 plugins {
     alias(libs.plugins.android.application)
 }
@@ -14,6 +15,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "TMDB_API_KEY", "\"${project.findProperty("TMDB_API_KEY") ?: ""}\"")
+
     }
 
     buildFeatures {
