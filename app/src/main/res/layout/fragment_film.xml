@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:text="@string/selamatmenonton"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvNowPlaying"
+            android:layout_width="match_parent"
+            android:layout_height="183dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/description_of_thefilm_horizontal"
+            tools:listitem="@layout/list_item_film_horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchFilm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:iconifiedByDefault="false"
+                android:paddingStart="3dp"
+                android:paddingEnd="3dp"
+                android:searchIcon="@drawable/ic_search"
+                android:queryHint="@string/search_film"
+                android:background="@drawable/bg_search"/>
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/rekomendasi_film"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFilmRecommend"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/list_item_film" />
+
+        <!-- Tambahkan tombol di bawah RecyclerView -->
+        <Button
+            android:id="@+id/btnLoadMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Load More"
+            android:layout_margin="16dp"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
