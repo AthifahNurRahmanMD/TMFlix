@@ -35,14 +35,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         this.onSelectData = onSelectData;
     }
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_film, parent, false);
-        return new ViewHolder(view);
+    public void addMovies(List<ModelMovie> newMovies) {
+        int startPosition = items.size();
+        items.addAll(newMovies);
+        notifyItemRangeInserted(startPosition, newMovies.size());
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public MovieAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_film, parent, false);
+        return new MovieAdapter.ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(MovieAdapter.ViewHolder holder, int position) {
         final ModelMovie data = items.get(position);
 
         holder.tvTitle.setText(data.getTitle());
@@ -52,7 +58,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         float ratingValue = (float) data.getVoteAverage();
         holder.ratingBar.setNumStars(5);
         holder.ratingBar.setStepSize(0.5f);
-        holder.ratingBar.setRating(ratingValue / 2); // Karena rating dari 10, bagi 2 jadi 5 stars
+        holder.ratingBar.setRating(ratingValue / 2);
 
         Glide.with(mContext)
                 .load("https://image.tmdb.org/t/p/w185/" + data.getPosterPath())
@@ -69,8 +75,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return items.size();
     }
 
-
-    // ViewHolder class
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView cvFilm;
         ImageView imgPhoto;

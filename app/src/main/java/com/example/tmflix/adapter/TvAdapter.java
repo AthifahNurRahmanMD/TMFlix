@@ -25,37 +25,41 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.ViewHolder> {
     private List<ModelTv> items;
     private TvAdapter.onSelectData onSelectData;
     private Context mContext;
-    private double rating;
 
     public interface onSelectData {
         void onSelected(ModelTv modelTv);
     }
 
-    public TvAdapter(Context context, List<ModelTv> items, TvAdapter.onSelectData xSelectData) {
+    public TvAdapter(Context context, List<ModelTv> items, TvAdapter.onSelectData onSelectData) {
         this.mContext = context;
         this.items = items;
-        this.onSelectData = xSelectData;
+        this.onSelectData = onSelectData;
+    }
+
+    public void addTvies(List<ModelTv> newTvies) {
+        int startPosition = items.size();
+        items.addAll(newTvies);
+        notifyItemRangeInserted(startPosition, newTvies.size());
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TvAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_film, parent, false);
-        return new ViewHolder(view);
+        return new TvAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(TvAdapter.ViewHolder holder, int position) {
         final ModelTv data = items.get(position);
 
-        rating = data.getVoteAverage();
         holder.tvTitle.setText(data.getName());
         holder.tvReleaseDate.setText(data.getReleaseDate());
         holder.tvDesc.setText(data.getOverview());
 
-        float newValue = (float) rating;
+        float ratingValue = (float) data.getVoteAverage();
         holder.ratingBar.setNumStars(5);
         holder.ratingBar.setStepSize(0.5f);
-        holder.ratingBar.setRating(newValue / 2);
+        holder.ratingBar.setRating(ratingValue / 2);
 
         Glide.with(mContext)
                 .load(ApiConfig.URL_IMAGE + data.getPosterPath())

@@ -34,13 +34,13 @@ public class MovieHorizontalAdapter extends RecyclerView.Adapter<MovieHorizontal
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MovieHorizontalAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_film_horizontal, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(MovieHorizontalAdapter.ViewHolder holder, int position) {
         final ModelMovie data = items.get(position);
 
         Glide.with(mContext)
