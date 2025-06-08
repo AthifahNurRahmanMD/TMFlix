@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Basic Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="dark">#80E4DDDD</color>
+    <color name="transparent">#00000000</color>
+    <color name="colorPrimary">#5D0202</color>
+
+    <!-- Red Theme Colors - Warna merah untuk tema aplikasi -->
+    <color name="dark_red">#620101</color>
+    <color name="light_red">#FF0000</color>
+    <color name="darklight_red">#780F0F</color>
+    <color name="darklight_red2">#8A1212</color>
+    <color name="lil_light_red_">#EB2424</color>
+    <color name="lil_dark_red">#CC1818</color>
+    <color name="lightpinkwhite">#F85454</color>
+
+    <!-- Movie App Specific Colors -->
+    <color name="movie_primary">#E50914</color>
+    <color name="movie_primary_light">#FB1717</color>
+    <color name="movie_secondary">#B31414</color>
+    <color name="movie_dark">#141414</color>
+    <color name="movie_accent">#FFD700</color>
+    <color name="texttanggaldanpopuler">#FFDC8B</color>
+    <color name="gantibahasa_buttonlight">#FF0000</color>
+    <color name="gantibahasa_buttondark">#B31414</color>
+    <color name="tablayout_light">#FA4949</color>
+    <color name="tablayout_dark">#901111</color>
+
+    <!-- Colors untuk active tabnya -->
+    <color name="nav_active">#D92E41</color> <!-- warna tab aktif (misal pink) -->
+    <color name="nav_inactive">#807D7D</color> <!-- warna tab non-aktif (abu) -->
+
+    <!-- Background Colors untuk Light/Dark Theme -->
+    <color name="colorBackground">#FAFAFA</color>
+    <color name="colorBackgroundDark">#121212</color>
+    <color name="carddetail_light">#ED1515</color>
+    <color name="carddetail_dark">#BC1111</color>
+    <color name="buttongantibahasa_light">#784545</color>
+    <color name="buttongantibahasa_dark">#4A2A2A</color>
+    <color name="textcarddetail_light">#FFFFFF</color>
+    <color name="textcarddetail_dark">#FFFFFF</color>
+
+    <!-- Colors untuk Light/Dark bagian fragment yg button -->
+    <color name="lightfragment">#D72727</color>
+    <color name="darkfragment">#891111</color>
+
+
+    <!-- Card Colors -->
+    <color name="card_background">#FFFFFF</color>
+    <color name="card_background_dark">#2C2C2C</color>
+
+    <!-- Rating Color -->
+    <color name="colorRating">#FFD700</color>
+
+    <!-- Status Colors -->
+    <color name="error">#F44336</color>
+
+    <!-- Gradient Colors untuk release date dan elemen dekoratif -->
+    <color name="gradient_alt_start">#FF6B6B</color>
+
+</resources>

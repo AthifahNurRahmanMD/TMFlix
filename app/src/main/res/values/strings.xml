@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">TMFlix</string>
+    <string name="base_url">https://api.themoviedb.org/3/</string>
+    <string name="favorite">Favorite</string>
+    <string name="movie">Movie</string>
+    <string name="tv_show">TV Show</string>
+    <string name="welcomeUser">TMFlix2</string>
+    <string name="selamatmenonton">ENJOY WATCHING!</string>
+    <string name="tidak_ada_film_favorit">Nothing Favorite!</string>
+    <string name="rekomendasi_film">Recommended Show</string>
+    <string name="ganti_bahasa">Change Language</string>
+    <string name="ganti_bahasa_title">Change Language</string>
+    <string name="Tema">Theme</string>
+    <string name="setelan">Setting</string>
+    <string name="search_film">Search Film....</string>
+    <string name="fragment_text_favorite">Favorite</string>
+    <string name="fragment_text_tv_show">TV Show</string>
+    <string name="fragment_text_movie">Movie</string>
+    <string name="description_of_thefilm_horizontal">tampilan film yang dapat ditonton dan sedang tayang</string>
+    <string name="tanggal_rilis">Release Date :</string>
+    <string name="rating">Rating :</string>
+    <string name="trailer">Trailer</string>
+    <string name="storyline">STORYLINE :</string>
+    <string name="judul_film">Film Title</string>
+    <string name="tema_terang">Light</string>
+    <string name="tema_gelap">Dark</string>
+    <string name="kepopuleran">Popularity :</string>
+</resources>

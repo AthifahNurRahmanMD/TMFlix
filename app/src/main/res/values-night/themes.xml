@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Dark Theme -->
+    <style name="Base.Theme.TMFlix" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Warna utama aplikasi -->
+        <item name="colorPrimary">@color/lil_dark_red</item>
+        <item name="colorOnPrimary">@color/black</item>
+
+        <!-- Background -->
+        <item name="android:colorBackground">@color/darklight_red</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="colorSecondaryVariant">@color/tablayout_dark</item>
+
+        <!-- Kartu & permukaan -->
+        <item name="colorSurface">@color/colorBackgroundDark</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorSurfaceContainerLowest">@color/darklight_red2</item>
+
+        <!-- Aksen & rating -->
+        <item name="colorSecondary">@color/movie_accent</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- tanggal dan kepopuleran -->
+        <item name="colorOnTertiary">@color/texttanggaldanpopuler</item>
+
+        <!-- Error dan status -->
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/white</item>
+
+
+        <!-- Toolbar dan AppBar -->
+        <item name="colorSurfaceVariant">@color/lil_dark_red</item>
+        <item name="colorOnSurfaceVariant">@color/white</item>
+        <item name="colorOutline">@color/carddetail_dark</item>
+        <item name="colorErrorContainer">@color/lil_dark_red</item>
+        <item name="colorOnErrorContainer">@color/buttongantibahasa_dark</item>
+        <item name="colorSecondaryContainer">@color/movie_secondary</item>
+
+        <!-- Bagian Fragment -->
+        <item name="colorAccent">@color/darkfragment</item>
+        <item name="colorButtonNormal">@color/carddetail_dark</item>
+        <item name="colorOnContainer">@color/textcarddetail_dark</item>
+    </style>
+
+    <!-- Tema aplikasi yang digunakan -->
+    <style name="Theme.TMFlix" parent="Base.Theme.TMFlix" />
+
+</resources>
