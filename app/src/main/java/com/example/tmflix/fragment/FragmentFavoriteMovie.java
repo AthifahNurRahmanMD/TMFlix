@@ -16,7 +16,6 @@ import com.example.tmflix.activities.DetailMovieActivity;
 import com.example.tmflix.adapter.MovieAdapter;
 import com.example.tmflix.model.ModelMovie;
 import com.example.tmflix.sqlite.DatabaseHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
