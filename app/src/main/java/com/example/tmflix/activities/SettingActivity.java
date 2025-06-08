@@ -1,7 +1,5 @@
 package com.example.tmflix.activities;
 
-package com.example.tmflix.activities;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
