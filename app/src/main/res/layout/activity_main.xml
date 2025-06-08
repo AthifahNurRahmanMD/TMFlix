@@ -1,0 +1,145 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/android:colorBackground"
+    android:fitsSystemWindows="true">
+
+    <!-- Header diagonal pakai background custom -->
+    <FrameLayout
+        android:id="@+id/diagonalLayout"
+        android:layout_width="match_parent"
+        android:layout_height="990dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_diagonal_header" />
+    <!-- Kalau mau, kamu bisa bikin @drawable/bg_diagonal_header juga adaptif ke tema -->
+
+    <!-- Toolbar -->
+    <include layout="@layout/toolbar_main" />
+
+    <!-- Konten dan Navigasi -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="1dp"
+        android:layout_below="@+id/toolbar">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph" />
+
+        <!-- Custom Bottom Navigation -->
+        <LinearLayout
+            android:id="@+id/navigationBar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_rounded"
+            android:elevation="8dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <!-- Tab 1: Movie -->
+            <LinearLayout
+                android:id="@+id/tabFilm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/tab_navbottom"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="1dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_movie" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="14dp"
+                    android:text="@string/fragment_text_movie"
+                    android:textColor="?attr/colorAccent"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+                <View
+                    android:id="@+id/indicatorMovie"
+                    android:layout_width="50dp"
+                    android:layout_height="3dp"
+                    android:background="@drawable/bg_indicator_rounded"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+
+            <!-- Tab 2: TV Show -->
+            <LinearLayout
+                android:id="@+id/tabTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/tab_navbottom"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="1dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_tv" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="14dp"
+                    android:text="@string/fragment_text_tv_show"
+                    android:textColor="?attr/colorAccent"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+                <View
+                    android:id="@+id/indicatorTv"
+                    android:layout_width="50dp"
+                    android:layout_height="3dp"
+                    android:background="@drawable/bg_indicator_rounded"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <!-- Tab 3: Favorite -->
+            <LinearLayout
+                android:id="@+id/tabFav"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/tab_navbottom"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="1dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_favorite" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="14dp"
+                    android:text="@string/fragment_text_favorite"
+                    android:textColor="?attr/colorAccent"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+                <View
+                    android:id="@+id/indicatorFavorite"
+                    android:layout_width="50dp"
+                    android:layout_height="3dp"
+                    android:background="@drawable/bg_indicator_rounded"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>
