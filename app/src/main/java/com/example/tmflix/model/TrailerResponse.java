@@ -10,13 +10,13 @@ public class TrailerResponse {
     private int id;
 
     @SerializedName("results")
-    private List<ModelTrailer> results;
+    private List<com.example.tmflix2.model.ModelTrailer> results;
 
     public int getId() {
         return id;
     }
 
-    public List<ModelTrailer> getResults() {
+    public List<com.example.tmflix2.model.ModelTrailer> getResults() {
         return results;
     }
 }
