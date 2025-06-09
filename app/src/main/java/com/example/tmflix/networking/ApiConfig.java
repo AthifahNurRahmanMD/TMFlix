@@ -9,7 +9,6 @@ public class ApiConfig {
         public static final String API_KEY = BuildConfig.TMDB_API_KEY;
         public static final String LANGUAGE = "en-US";
         public static final String URL_IMAGE = "https://image.tmdb.org/t/p/w780/";
-//        public static final String URL_IMAGE = "https://www.themoviedb.org/tv/";
         public static final String URL_FILM = "https://www.themoviedb.org/movie/";
 
         // Endpoint Path
@@ -22,7 +21,10 @@ public class ApiConfig {
         public static final String MOVIE_VIDEO = "movie/{id}/videos";
         public static final String TV_VIDEO = "tv/{id}/videos";
 
-        // Query Parameter tambahan
-        public static final String NOTIF_DATE = "primary_release_date.gte";
-        public static final String RELEASE_DATE = "primary_release_date.lte";
+        //path untuk genre
+        public static final String GENRE_MOVIE = "genre/movie/list";
+        public static final String GENRE_TV = "genre/tv/list";
+        public static final String DISCOVER_MOVIE_BY_GENRE = "discover/movie";
+        public static final String DISCOVER_TV_BY_GENRE = "discover/tv";
+
 }
