@@ -41,7 +41,6 @@ android {
 dependencies {
 
     implementation(libs.appcompat)
-    implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
 
@@ -50,6 +49,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.glide)
     implementation(libs.swiperefreshlayout)
+    implementation (libs.material)
 
     // Navigation component
     implementation(libs.navigation.fragment.ktx)
