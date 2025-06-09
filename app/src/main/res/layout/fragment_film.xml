@@ -12,14 +12,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:text="@string/selamatmenonton"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:text="@string/selamatmenonton"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvNowPlaying"
@@ -50,18 +50,43 @@
                 android:background="@drawable/bg_search"/>
         </LinearLayout>
 
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:scrollbars="none">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupGenres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:chipSpacingHorizontal="8dp"
+                app:singleSelection="true">
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
 
         <TextView
+            android:id="@+id/text_rekomendasi_film"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="5dp"
             android:text="@string/rekomendasi_film"
             android:textColor="?attr/colorOnSurface"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvFilmRecommend"
@@ -69,14 +94,14 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/list_item_film" />
 
-        <!-- Tambahkan tombol di bawah RecyclerView -->
         <Button
             android:id="@+id/btnLoadMore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Load More"
-            android:layout_margin="16dp"
-            android:visibility="gone"/>
+            android:text="@string/load_more"
+            android:layout_margin="19dp"
+            android:visibility="gone"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="18sp"/>
     </LinearLayout>
-
 </androidx.core.widget.NestedScrollView>
