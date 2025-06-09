@@ -12,7 +12,7 @@
             android:id="@+id/btnTrailer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="15dp"
             android:backgroundTint="@color/lil_light_red_"
             android:textAllCaps="false"
             android:textColor="?attr/colorOnSurface"
