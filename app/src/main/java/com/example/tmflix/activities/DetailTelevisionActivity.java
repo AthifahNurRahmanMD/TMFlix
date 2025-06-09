@@ -2,7 +2,6 @@ package com.example.tmflix.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,17 +45,17 @@ import retrofit2.Response;
 public class DetailTelevisionActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    TextView tvTitle, tvName, tvRating, tvRelease, tvPopularity, tvOverview;
+    TextView tvTitle, tvName, tvRating, tvRelease, tvPopularity, tvOverview, tvGenres;
     ImageView imgCover, imgPhoto;
     ImageButton imgFavorite;
     RatingBar ratingBar;
     RecyclerView rvTrailer;
+    ProgressBar progressBarTrailer;
 
-    String NameFilm, ReleaseDate, Popularity, Overview, Cover, Thumbnail, movieURL;
+    String NameFilm, ReleaseDate, Popularity, Overview, Cover, Thumbnail;
     int Id;
     double Rating;
     ModelTv modelTV;
-    ProgressDialog progressDialog;
     List<ModelTrailer> modelTrailer = new ArrayList<>();
     TrailerAdapter trailerAdapter;
     DatabaseHelper helper;
@@ -81,22 +81,19 @@ public class DetailTelevisionActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Mohon Tunggu");
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Sedang menampilkan trailer");
-
         ratingBar = findViewById(R.id.ratingBar);
         imgCover = findViewById(R.id.imgCover);
         imgPhoto = findViewById(R.id.imgPhoto);
         imgFavorite = findViewById(R.id.imgFavorite);
         tvTitle = findViewById(R.id.tvTitle);
         tvName = findViewById(R.id.tvName);
+        tvGenres = findViewById(R.id.tvGenres);
         tvRating = findViewById(R.id.tvRating);
         tvRelease = findViewById(R.id.tvRelease);
         tvPopularity = findViewById(R.id.tvPopularity);
         tvOverview = findViewById(R.id.tvOverview);
         rvTrailer = findViewById(R.id.rvTrailer);
+        progressBarTrailer = findViewById(R.id.progressBarTrailer);
 
         helper = new DatabaseHelper(this);
 
@@ -110,11 +107,10 @@ public class DetailTelevisionActivity extends AppCompatActivity {
             Overview = modelTV.getOverview();
             Cover = modelTV.getBackdropPath();
             Thumbnail = modelTV.getPosterPath();
-            movieURL = ApiConfig.URL_FILM + Id;
 
             tvTitle.setText(NameFilm);
             tvName.setText(NameFilm);
-            tvRating.setText(Rating + "/10");
+            tvRating.setText(String.format("%.1f/10", Rating));
             tvRelease.setText(ReleaseDate);
             tvPopularity.setText(Popularity);
             tvOverview.setText(Overview);
@@ -126,10 +122,16 @@ public class DetailTelevisionActivity extends AppCompatActivity {
             ratingBar.setStepSize(0.5f);
             ratingBar.setRating(newValue / 2);
 
-            // Cek apakah film ini sudah difavoritkan
             isFavorite = helper.isTvFavorited(Id);
             imgFavorite.setImageResource(isFavorite ? android.R.drawable.btn_star_big_on : android.R.drawable.btn_star_big_off);
 
+            // Menampilkan genre
+            if (modelTV.getGenreNames() != null && !modelTV.getGenreNames().isEmpty()) {
+                String genreString = android.text.TextUtils.join(", ", modelTV.getGenreNames());
+                tvGenres.setText(genreString);
+            } else {
+                tvGenres.setText("-");
+            }
 
             Glide.with(this)
                     .load(ApiConfig.URL_IMAGE + Cover)
@@ -142,12 +144,19 @@ public class DetailTelevisionActivity extends AppCompatActivity {
                     .into(imgPhoto);
 
             rvTrailer.setHasFixedSize(true);
-            rvTrailer.setLayoutManager(new LinearLayoutManager(this));
-
+            rvTrailer.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             getTrailer();
+        } else {
+            Toast.makeText(this, "Gagal memuat detail TV. Data tidak ditemukan.", Toast.LENGTH_LONG).show();
+            finish();
         }
 
         imgFavorite.setOnClickListener(v -> {
+            if (modelTV == null) {
+                Toast.makeText(this, "Tidak dapat menambah/menghapus favorit, data tidak lengkap.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             if (isFavorite) {
                 helper.deleteFavoriteTv(Id);
                 Toast.makeText(this, NameFilm + " dihapus dari favorit", Toast.LENGTH_SHORT).show();
@@ -162,29 +171,29 @@ public class DetailTelevisionActivity extends AppCompatActivity {
     }
 
     private void getTrailer() {
-        progressDialog.show();
+        progressBarTrailer.setVisibility(View.VISIBLE);
         ApiService apiService = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
-        Call<TrailerResponse> call = apiService.getTVTrailers(
-                Id,
-                ApiConfig.API_KEY,
-                ApiConfig.LANGUAGE);
+        Call<TrailerResponse> call = apiService.getTVTrailers(Id, ApiConfig.API_KEY, ApiConfig.LANGUAGE);
         call.enqueue(new Callback<TrailerResponse>() {
             @Override
             public void onResponse(Call<TrailerResponse> call, Response<TrailerResponse> response) {
-                progressDialog.dismiss();
+                progressBarTrailer.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d("API_RESPONSE", "Data detail television: " + new Gson().toJson(response.body()));
                     modelTrailer = response.body().getResults();
-                    showTrailer();
+                    if (!modelTrailer.isEmpty()) {
+                        showTrailer();
+                    } else {
+                        Toast.makeText(DetailTelevisionActivity.this, "Trailer tidak ditemukan.", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(DetailTelevisionActivity.this, "Gagal menampilkan trailer", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailTelevisionActivity.this, "Gagal menampilkan trailer.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<TrailerResponse> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(DetailTelevisionActivity.this, "Koneksi internet gagal", Toast.LENGTH_SHORT).show();
+                progressBarTrailer.setVisibility(View.GONE);
+                Toast.makeText(DetailTelevisionActivity.this, "Koneksi gagal: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

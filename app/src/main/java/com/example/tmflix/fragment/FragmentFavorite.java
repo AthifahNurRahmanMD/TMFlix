@@ -14,10 +14,6 @@ import com.google.android.material.tabs.TabLayout;
 
 public class FragmentFavorite extends Fragment {
 
-    public FragmentFavorite() {
-        // Required empty public constructor
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

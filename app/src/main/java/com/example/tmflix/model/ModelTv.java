@@ -2,6 +2,7 @@ package com.example.tmflix.model;
 
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
+import java.util.List;
 
 public class ModelTv implements Serializable {
 
@@ -28,6 +29,10 @@ public class ModelTv implements Serializable {
 
     @SerializedName("popularity")
     private String popularity;
+
+    @SerializedName("genre_ids")
+    private List<Integer> genreIds;
+    private List<String> genreNames;
 
     public ModelTv() {}
 
@@ -94,4 +99,9 @@ public class ModelTv implements Serializable {
     public void setPopularity(String popularity) {
         this.popularity = popularity;
     }
+
+    public List<Integer> getGenreIds() { return genreIds; }
+    public void setGenreIds(List<Integer> genreIds) { this.genreIds = genreIds; }
+    public List<String> getGenreNames() { return genreNames; }
+    public void setGenreNames(List<String> genreNames) { this.genreNames = genreNames; }
 }
