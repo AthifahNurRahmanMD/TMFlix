@@ -23,7 +23,7 @@ public class FragmentFavoriteMovie extends Fragment implements MovieAdapter.onSe
 
     private RecyclerView rvMovieFav;
     private List<ModelMovie> modelMovie = new ArrayList<>();
-    private DatabaseHelper helper;  // Ganti tipe RealmHelper jadi DatabaseHelper
+    private DatabaseHelper helper;
     private TextView txtNoData;
 
     public FragmentFavoriteMovie() {

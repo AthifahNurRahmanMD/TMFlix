@@ -2,7 +2,7 @@ package com.example.tmflix.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ProgressDialog;
+// import android.app.ProgressDialog; // Hapus import ProgressDialog
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar; // Tambahkan import ProgressBar
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,17 +46,17 @@ import retrofit2.Response;
 public class DetailMovieActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    TextView tvTitle, tvName, tvRating, tvRelease, tvPopularity, tvOverview;
+    TextView tvTitle, tvName, tvRating, tvRelease, tvPopularity, tvOverview, tvGenres;
     ImageView imgCover, imgPhoto;
     ImageButton imgFavorite;
     RatingBar ratingBar;
     RecyclerView rvTrailer;
+    ProgressBar progressBarTrailer;
 
-    String NameFilm, ReleaseDate, Popularity, Overview, Cover, Thumbnail, movieURL;
+    String NameFilm, ReleaseDate, Popularity, Overview, Cover, Thumbnail;
     int Id;
     double Rating;
     ModelMovie modelMovie;
-    ProgressDialog progressDialog;
     List<ModelTrailer> modelTrailer = new ArrayList<>();
     TrailerAdapter trailerAdapter;
     DatabaseHelper helper;
@@ -82,22 +83,19 @@ public class DetailMovieActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Mohon Tunggu");
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Sedang menampilkan trailer");
-
         ratingBar = findViewById(R.id.ratingBar);
         imgCover = findViewById(R.id.imgCover);
         imgPhoto = findViewById(R.id.imgPhoto);
         imgFavorite = findViewById(R.id.imgFavorite);
         tvTitle = findViewById(R.id.tvTitle);
         tvName = findViewById(R.id.tvName);
+        tvGenres = findViewById(R.id.tvGenres);
         tvRating = findViewById(R.id.tvRating);
         tvRelease = findViewById(R.id.tvRelease);
         tvPopularity = findViewById(R.id.tvPopularity);
         tvOverview = findViewById(R.id.tvOverview);
         rvTrailer = findViewById(R.id.rvTrailer);
+        progressBarTrailer = findViewById(R.id.progressBarTrailer);
 
         helper = new DatabaseHelper(this);
 
@@ -112,11 +110,10 @@ public class DetailMovieActivity extends AppCompatActivity {
             Overview = modelMovie.getOverview();
             Cover = modelMovie.getBackdropPath();
             Thumbnail = modelMovie.getPosterPath();
-            movieURL = ApiConfig.URL_IMAGE + Id;
 
             tvTitle.setText(NameFilm);
             tvName.setText(NameFilm);
-            tvRating.setText(Rating + "/10");
+            tvRating.setText(String.format("%.1f/10", Rating));
             tvRelease.setText(ReleaseDate);
             tvPopularity.setText(Popularity);
             tvOverview.setText(Overview);
@@ -127,11 +124,15 @@ public class DetailMovieActivity extends AppCompatActivity {
             ratingBar.setNumStars(5);
             ratingBar.setStepSize(0.5f);
             ratingBar.setRating(newValue / 2);
-
-            // Cek apakah film ini sudah difavoritkan
             isFavorite = helper.isMovieFavorited(Id);
             imgFavorite.setImageResource(isFavorite ? android.R.drawable.btn_star_big_on : android.R.drawable.btn_star_big_off);
 
+            if (modelMovie.getGenreNames() != null && !modelMovie.getGenreNames().isEmpty()) {
+                String genreString = android.text.TextUtils.join(", ", modelMovie.getGenreNames());
+                tvGenres.setText(genreString);
+            } else {
+                tvGenres.setText("-");
+            }
 
             Glide.with(this)
                     .load(ApiConfig.URL_IMAGE + Cover)
@@ -144,13 +145,19 @@ public class DetailMovieActivity extends AppCompatActivity {
                     .into(imgPhoto);
 
             rvTrailer.setHasFixedSize(true);
-            rvTrailer.setLayoutManager(new LinearLayoutManager(this));
-
+            rvTrailer.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             getTrailer();
+        } else {
+            Toast.makeText(this, "Gagal memuat detail film. Data tidak ditemukan.", Toast.LENGTH_LONG).show();
+            finish();
         }
 
-
         imgFavorite.setOnClickListener(v -> {
+            if (modelMovie == null) {
+                Toast.makeText(this, "Tidak dapat menambah/menghapus favorit, data film tidak lengkap.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             if (isFavorite) {
                 helper.deleteFavoriteMovie(Id);
                 Toast.makeText(this, NameFilm + " dihapus dari favorit", Toast.LENGTH_SHORT).show();
@@ -165,8 +172,15 @@ public class DetailMovieActivity extends AppCompatActivity {
     }
 
     private void getTrailer() {
-        progressDialog.show();
+        progressBarTrailer.setVisibility(View.VISIBLE);
         ApiService apiService = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
+
+        if (Id == 0) {
+            progressBarTrailer.setVisibility(View.GONE);
+            Toast.makeText(DetailMovieActivity.this, "ID Film tidak valid untuk memuat trailer.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Call<TrailerResponse> call = apiService.getMovieTrailers(
                 Id,
                 ApiConfig.API_KEY,
@@ -174,20 +188,29 @@ public class DetailMovieActivity extends AppCompatActivity {
         call.enqueue(new Callback<TrailerResponse>() {
             @Override
             public void onResponse(Call<TrailerResponse> call, Response<TrailerResponse> response) {
-                progressDialog.dismiss();
+                progressBarTrailer.setVisibility(View.GONE); // <<< Ganti progressDialog.dismiss()
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("API_RESPONSE", "Data detail movie: " + new Gson().toJson(response.body()));
-                    modelTrailer = response.body().getResults();
-                    showTrailer();
+                    if (response.body().getResults() != null) {
+                        modelTrailer = response.body().getResults();
+                        if (!modelTrailer.isEmpty()) {
+                            showTrailer();
+                        } else {
+                            Toast.makeText(DetailMovieActivity.this, "Tidak ada trailer ditemukan.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(DetailMovieActivity.this, "Gagal menampilkan trailer: Data trailer kosong.", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(DetailMovieActivity.this, "Gagal menampilkan trailer", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailMovieActivity.this, "Gagal menampilkan trailer: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<TrailerResponse> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(DetailMovieActivity.this, "Koneksi internet gagal", Toast.LENGTH_SHORT).show();
+                progressBarTrailer.setVisibility(View.GONE);
+                Toast.makeText(DetailMovieActivity.this, "Koneksi internet gagal atau masalah server: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("DetailMovieActivity", "Trailer API Failure: " + t.getMessage());
             }
         });
     }

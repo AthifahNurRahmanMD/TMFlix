@@ -20,17 +20,18 @@ import java.util.List;
 public class MovieHorizontalAdapter extends RecyclerView.Adapter<MovieHorizontalAdapter.ViewHolder> {
 
     private List<ModelMovie> items;
-    private onSelectData onSelectData;
+    private onSelectData onSelectData; // Deklarasi interface
     private Context mContext;
 
     public interface onSelectData {
         void onSelected(ModelMovie modelMovie);
     }
 
+    // Konstruktor harus menerima onSelectData
     public MovieHorizontalAdapter(Context context, List<ModelMovie> items, onSelectData onSelectData) {
         this.mContext = context;
         this.items = items;
-        this.onSelectData = onSelectData;
+        this.onSelectData = onSelectData; // Inisialisasi
     }
 
     @Override
@@ -44,13 +45,18 @@ public class MovieHorizontalAdapter extends RecyclerView.Adapter<MovieHorizontal
         final ModelMovie data = items.get(position);
 
         Glide.with(mContext)
-                .load(ApiConfig.URL_IMAGE + data.getBackdropPath()) // ganti sesuai base URL yang kamu pakai
+                .load(ApiConfig.URL_IMAGE + data.getBackdropPath())
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.ic_image)
                         .transform(new RoundedCorners(10)))
                 .into(holder.imgPhoto);
 
-        holder.imgPhoto.setOnClickListener(v -> onSelectData.onSelected(data));
+        // Tambahkan listener klik di sini
+        holder.imgPhoto.setOnClickListener(v -> {
+            if (onSelectData != null) { // Pastikan interface tidak null
+                onSelectData.onSelected(data);
+            }
+        });
     }
 
     @Override
