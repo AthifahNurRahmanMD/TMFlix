@@ -1,5 +1,6 @@
 package com.example.tmflix.networking;
 
+import com.example.tmflix.model.GenreListResponse;
 import com.example.tmflix.model.MovieResponse;
 import com.example.tmflix.model.TVResponse;
 import com.example.tmflix.model.TrailerResponse;
@@ -66,5 +67,31 @@ public interface ApiService {
             @Query("query") String query
     );
 
-    Call<MovieResponse> getTodayReleases(String s, String s1, String todayDate, String todayDate1);
+    @GET(ApiConfig.GENRE_MOVIE)
+    Call<GenreListResponse> getMovieGenres(
+            @Query("api_key") String apiKey,
+            @Query("language") String language
+    );
+
+    @GET(ApiConfig.GENRE_TV)
+    Call<GenreListResponse> getTVGenres(
+            @Query("api_key") String apiKey,
+            @Query("language") String language
+    );
+
+    @GET(ApiConfig.DISCOVER_MOVIE_BY_GENRE)
+    Call<MovieResponse> getMoviesByGenre(
+            @Query("api_key") String apiKey,
+            @Query("language") String language,
+            @Query("with_genres") int genreId,
+            @Query("page") int page
+    );
+
+    @GET(ApiConfig.DISCOVER_TV_BY_GENRE)
+    Call<TVResponse> getTVShowsByGenre(
+            @Query("api_key") String apiKey,
+            @Query("language") String language,
+            @Query("with_genres") int genreId,
+            @Query("page") int page
+    );
 }
