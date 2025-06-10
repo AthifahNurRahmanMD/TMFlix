@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
@@ -49,8 +51,8 @@ public class FragmentTv extends Fragment implements
     private RecyclerView rvNowPlaying, rvFilmRecommend;
     private TvHorizontalAdapter tvHorizontalAdapter;
     private TvAdapter tvAdapter;
-    private ProgressDialog progressDialog;
     private SearchView searchFilm;
+    private EditText searchEditText;
     private List<ModelTv> tvPlayNow = new ArrayList<>();
     private List<ModelTv> tvPopular = new ArrayList<>();
     private Map<Integer, String> genreMap = new HashMap<>();
@@ -60,7 +62,6 @@ public class FragmentTv extends Fragment implements
     private int currentPage = 1;
     private boolean isLoading = false;
     private boolean isSearching = false;
-    private boolean isLastPage = false;
     private ChipGroup chipGroupGenres;
     private TextView text_rekomendasi_tv;
     private int currentSelectedGenreId = 0;
@@ -85,6 +86,11 @@ public class FragmentTv extends Fragment implements
         searchFilm = view.findViewById(R.id.searchFilm);
         searchFilm.setIconifiedByDefault(false);
 
+        // editText untuk mengubah warna teks pencarian
+        searchEditText = searchFilm.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchEditText.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
+
+
         chipGroupGenres = view.findViewById(R.id.chipGroupGenres);
         chipGroupGenres.setSingleSelection(true);
         chipGroupGenres.setSelectionRequired(true);
@@ -93,11 +99,6 @@ public class FragmentTv extends Fragment implements
 
         btnLoadMore = view.findViewById(R.id.btnLoadMore);
         btnLoadMore.setOnClickListener(v -> loadMoreTv());
-
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Mohon Tunggu");
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Sedang menampilkan data");
 
         fetchTVGenres();
 
@@ -191,19 +192,21 @@ public class FragmentTv extends Fragment implements
                         addGenresToChipGroup(genres);
                     }
                 } else {
-                    Toast.makeText(getContext(), "Gagal memuat genre: " + response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Failed to load genres: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<GenreListResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Error jaringan genre: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Network error loading genres: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     /** Tambah chip genre ke ChipGroup, termasuk "All" */
+
+    @SuppressLint("SetTextI18n")
     private void addGenresToChipGroup(List<Genre> genres) {
         chipGroupGenres.removeAllViews();
 
@@ -229,7 +232,7 @@ public class FragmentTv extends Fragment implements
     }
 
     /** Ambil daftar TV Popular berdasarkan genre */
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n"})
     private void fetchTVPopular(int genreId) {
         if (isSearching) return;
         if (currentPage == 1) {
@@ -251,7 +254,7 @@ public class FragmentTv extends Fragment implements
 
         call.enqueue(new Callback<TVResponse>() {
             @Override
-            public void onResponse(Call<TVResponse> call, Response<TVResponse> response) {
+            public void onResponse(@NonNull Call<TVResponse> call, Response<TVResponse> response) {
                 progressBar.setVisibility(View.GONE);
                 isLoading = false;
                 if (response.isSuccessful() && response.body() != null) {
@@ -270,7 +273,7 @@ public class FragmentTv extends Fragment implements
                         tvPopular.addAll(tvs);
                         showFilmTV(false);
                     } else {
-                        Toast.makeText(getContext(), "Tidak ada TV yang ditemukan untuk genre ini.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "No TV shows found for this genre.", Toast.LENGTH_SHORT).show();
                         tvPopular.clear();
                         showFilmTV(false);
                     }
@@ -280,15 +283,15 @@ public class FragmentTv extends Fragment implements
                         btnLoadMore.setVisibility(View.GONE);
                     }
                 } else {
-                    Toast.makeText(getContext(), "Gagal memuat TV: " + response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Failed to load TV: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<TVResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 isLoading = false;
-                Toast.makeText(getContext(), "Error jaringan TV: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Network error TV: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -300,7 +303,7 @@ public class FragmentTv extends Fragment implements
 
         call.enqueue(new Callback<TVResponse>() {
             @Override
-            public void onResponse(Call<TVResponse> call, Response<TVResponse> response) {
+            public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     tvPlayNow.clear();
@@ -323,7 +326,7 @@ public class FragmentTv extends Fragment implements
             @Override
             public void onFailure(Call<TVResponse> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Error jaringan Now Playing TV: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Network error Now Playing TV: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -355,13 +358,13 @@ public class FragmentTv extends Fragment implements
                     }
                     tvPopular.addAll(result);
                     showFilmTV(true);
-                    text_rekomendasi_tv.setText("Hasil Pencarian untuk: " + query);
+                    text_rekomendasi_tv.setText("Search results for: " + query);
                     btnLoadMore.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(getContext(), "Tidak ada hasil pencarian untuk '" + query + "'.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "No search results for '" + query + "'.", Toast.LENGTH_SHORT).show();
                     tvPopular.clear();
                     showFilmTV(true);
-                    text_rekomendasi_tv.setText("Tidak ada hasil. Coba kata kunci lain.");
+                    text_rekomendasi_tv.setText("No results. Try another keyword.");
                     btnLoadMore.setVisibility(View.GONE);
                 }
             }
@@ -370,7 +373,7 @@ public class FragmentTv extends Fragment implements
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 isLoading = false;
-                Toast.makeText(getContext(), "Error jaringan pencarian: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Network error during search: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -380,7 +383,7 @@ public class FragmentTv extends Fragment implements
             currentPage++;
             fetchTVPopular(currentSelectedGenreId);
         } else if (isSearching) {
-            Toast.makeText(getContext(), "Tidak bisa memuat lebih banyak saat mode pencarian aktif.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Cannot load more while search mode is active.", Toast.LENGTH_SHORT).show();
         }
     }
 

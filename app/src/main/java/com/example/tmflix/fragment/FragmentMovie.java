@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
@@ -63,6 +65,7 @@ public class FragmentMovie extends Fragment {
 
     private TextView text_rekomendasi_film;
     private SearchView searchFilm;
+    private EditText searchEditText;
     private ChipGroup chipGroupGenres;
 
     private int currentSelectedGenreId = 0; // ID genre yang sedang aktif (0 = "All")
@@ -96,12 +99,16 @@ public class FragmentMovie extends Fragment {
             startActivity(intent);
         });
         rvNowPlaying.setAdapter(adapterHorizontal);
-        // Snap ke tengah saat scroll (UX bagus)
+        // Snap ke tengah saat scroll
         new LinearSnapHelper().attachToRecyclerView(rvNowPlaying);
 
         // SearchView setup
         searchFilm = view.findViewById(R.id.searchFilm);
         searchFilm.setIconifiedByDefault(false);
+
+        // editText untuk mengubah warna teks pencarian
+        searchEditText = searchFilm.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchEditText.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
 
         chipGroupGenres = view.findViewById(R.id.chipGroupGenres);
         chipGroupGenres.setSingleSelection(true);
@@ -166,7 +173,7 @@ public class FragmentMovie extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Jika teks pencarian dihapus setelah mode search, kembali ke genre sebelumnya
+                // Jika teks pencarian dihapus setelah mode search, kembali ke genre beforenya
                 if (newText.isEmpty() && isSearching) {
                     isSearching = false;
                     currentPage = 1;
@@ -318,15 +325,6 @@ public class FragmentMovie extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 isLoading = false;
 
-//                if (response.isSuccessful() && response.body() != null) {
-//                    if (currentPage == 1) {
-//                        listFilm.clear();
-//                    }
-//
-//                    if (response.body().getResults() != null && !response.body().getResults().isEmpty()) {
-//                        listFilm.addAll(response.body().getResults());
-//                        movieAdapter.notifyDataSetChanged();
-//                    }
                 if (response.isSuccessful() && response.body() != null) {
                     if (currentPage == 1) {
                         listFilm.clear();
