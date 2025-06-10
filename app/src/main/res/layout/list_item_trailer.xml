@@ -15,7 +15,7 @@
             android:layout_margin="15dp"
             android:backgroundTint="@color/lil_light_red_"
             android:textAllCaps="false"
-            android:textColor="?attr/colorOnSurface"
+            android:textColor="?attr/colorSurface"
             android:textSize="14sp" />
 
     </LinearLayout>
