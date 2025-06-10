@@ -10,7 +10,7 @@ Aplikasi ini diciptakan dengan antarmuka modern, sederhana, dan responsif agar p
 
 ## ✨ Fitur Utama
 - **Eksplorasi Film Populer**  
-  Temukan daftar film trending dan rekomendasi setiap hari.
+  Temukan daftar film yang sedang tayang dan rekomendasi setiap hari.
 - **Rating & Deskripsi**  
   Baca ringkasan cerita dan cek rating sebelum memilih film favorit Anda.
 - **Tautan Cuplikan Film**  
@@ -36,3 +36,5 @@ Aplikasi ini diciptakan dengan antarmuka modern, sederhana, dan responsif agar p
 | **Navigasi Android**      | Navigation Component                             |
 | **Pemrosesan Gambar**     | Glide                                            |
 ---
+
+Selamat menonton dan bereksplorasi dengan TMFlix! 🍿
