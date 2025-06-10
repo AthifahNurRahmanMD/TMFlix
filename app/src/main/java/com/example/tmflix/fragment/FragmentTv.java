@@ -85,11 +85,11 @@ public class FragmentTv extends Fragment implements
 
         searchFilm = view.findViewById(R.id.searchFilm);
         searchFilm.setIconifiedByDefault(false);
+        searchFilm.setQueryHint(getString(R.string.search_film));
 
         // editText untuk mengubah warna teks pencarian
         searchEditText = searchFilm.findViewById(androidx.appcompat.R.id.search_src_text);
         searchEditText.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
-
 
         chipGroupGenres = view.findViewById(R.id.chipGroupGenres);
         chipGroupGenres.setSingleSelection(true);
@@ -157,6 +157,16 @@ public class FragmentTv extends Fragment implements
             }
         });
 
+        // Ini bagian untuk mengubah hint SearchView saat fokus
+        searchEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                searchFilm.setQueryHint("");
+            } else {
+                searchFilm.setQueryHint(getString(R.string.search_film));
+            }
+        });
+
+        // Set listener untuk menutup SearchView
         searchFilm.setOnCloseListener(() -> {
             isSearching = false;
             currentPage = 1;
@@ -205,7 +215,6 @@ public class FragmentTv extends Fragment implements
     }
 
     /** Tambah chip genre ke ChipGroup, termasuk "All" */
-
     @SuppressLint("SetTextI18n")
     private void addGenresToChipGroup(List<Genre> genres) {
         chipGroupGenres.removeAllViews();

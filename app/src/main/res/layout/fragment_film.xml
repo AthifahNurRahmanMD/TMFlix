@@ -40,12 +40,13 @@
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchFilm"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:iconifiedByDefault="false"
                 android:paddingStart="1dp"
                 android:paddingEnd="3dp"
                 android:searchIcon="@drawable/ic_search"
                 android:queryHint="@string/search_film"
+                android:textColorHint="@color/dark"
                 android:background="@drawable/bg_search"/>
         </LinearLayout>
 

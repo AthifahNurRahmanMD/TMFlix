@@ -105,6 +105,7 @@ public class FragmentMovie extends Fragment {
         // SearchView setup
         searchFilm = view.findViewById(R.id.searchFilm);
         searchFilm.setIconifiedByDefault(false);
+        searchFilm.setQueryHint(getString(R.string.search_film));
 
         // editText untuk mengubah warna teks pencarian
         searchEditText = searchFilm.findViewById(androidx.appcompat.R.id.search_src_text);
@@ -182,6 +183,15 @@ public class FragmentMovie extends Fragment {
                     fetchMovies(currentSelectedGenreId);
                 }
                 return false;
+            }
+        });
+
+        // Ini bagian untuk mengubah hint SearchView saat fokus
+        searchEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                searchFilm.setQueryHint("");
+            } else {
+                searchFilm.setQueryHint(getString(R.string.search_film));
             }
         });
 
