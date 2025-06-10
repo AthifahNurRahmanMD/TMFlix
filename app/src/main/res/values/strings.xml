@@ -26,4 +26,5 @@
     <string name="tema_gelap">Dark</string>
     <string name="kepopuleran">Popularity :</string>
     <string name="load_more">Load More</string>
+    <string name="movie_name_horizontal">Movie Name</string>
 </resources>

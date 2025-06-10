@@ -40,6 +40,9 @@
         <item name="colorAccent">@color/darkfragment</item>
         <item name="colorButtonNormal">@color/carddetail_dark</item>
         <item name="colorOnContainer">@color/textcarddetail_dark</item>
+
+        <item name="colorTertiaryContainer">@color/lightpinkwhite</item>
+        <item name="colorTertiary">@color/lil_dark_red2</item>
     </style>
 
     <!-- Tema aplikasi yang digunakan -->

@@ -14,8 +14,10 @@
     <color name="darklight_red">#780F0F</color>
     <color name="darklight_red2">#8A1212</color>
     <color name="lil_light_red_">#EB2424</color>
+    <color name="lil_light_red_2">#FF5252</color>
     <color name="lil_dark_red">#CC1818</color>
-    <color name="lightpinkwhite">#F85454</color>
+    <color name="lil_dark_red2">#991111</color>
+    <color name="lightpinkwhite">#D12424</color>
 
     <!-- Movie App Specific Colors -->
     <color name="movie_primary">#E50914</color>
@@ -57,8 +59,11 @@
 
     <!-- Status Colors -->
     <color name="error">#F44336</color>
+    <color name="traaaaiiler">#CCC3C4</color>
 
     <!-- Gradient Colors untuk release date dan elemen dekoratif -->
     <color name="gradient_alt_start">#FF6B6B</color>
+    <color name="gradient_overlay_dark">#891111</color>
+    <color name="gradient_overlay_light">#33000000</color>
 
 </resources>

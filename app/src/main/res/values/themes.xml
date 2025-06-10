@@ -38,9 +38,11 @@
 
         <!-- Bagian Fragment -->
         <item name="colorAccent">@color/lightfragment</item>
-
         <item name="colorButtonNormal">@color/carddetail_light</item>
         <item name="colorOnContainer">@color/textcarddetail_light</item>
+
+        <item name="colorTertiaryContainer">@color/lightpinkwhite</item> //wrn ut tggal rilis
+        <item name="colorTertiary">@color/lil_light_red_</item>  // wrn card film
     </style>
 
     <!-- Tema aplikasi yang digunakan -->
