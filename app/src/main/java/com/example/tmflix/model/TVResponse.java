@@ -7,16 +7,12 @@ public class TVResponse {
     @SerializedName("results")
     private List<com.example.tmflix.model.ModelTv> results;
 
+    @SerializedName("total_pages")
+    private int totalPages;
+
     public List<com.example.tmflix.model.ModelTv> getResults() {
         return results;
     }
-
-    public void setResults(List<com.example.tmflix.model.ModelTv> results) {
-        this.results = results;
-    }
-
-    @SerializedName("total_pages")
-    private int totalPages;
 
     public int getTotalPages() {
         return totalPages;
