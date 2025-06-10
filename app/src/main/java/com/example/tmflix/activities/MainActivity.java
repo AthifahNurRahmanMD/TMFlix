@@ -2,7 +2,6 @@ package com.example.tmflix.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -126,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 recreate();
             }
         } catch (Exception e) {
-            // Ignore error
+            e.printStackTrace();
         }
     }
 
