@@ -220,15 +220,14 @@ public class FragmentMovie extends Fragment {
                     adapterHorizontal.notifyDataSetChanged();
                 } else {
                     Log.e("FragmentMovie", "Failed to load Now Playing: " + response.message());
-                    Toast.makeText(getContext(), "Failed to load Now Playing: " + response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Failed to load Now Playing: " , Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
+            public void onFailure(Call<MovieResponse> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Log.e("FragmentMovie", "Network error while loading genres: " + t.getMessage());
-                Toast.makeText(getContext(), "Network error while loading genres: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e("FragmentMovie", "Error loading Now Playing: " + t.getMessage());
             }
         });
     }
@@ -254,7 +253,6 @@ public class FragmentMovie extends Fragment {
                     }
                 }else {
                     Log.e("FragmentMovie", "Failed to load genres: " + response.message());
-                    Toast.makeText(getContext(), "Failed to load genres: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -263,7 +261,7 @@ public class FragmentMovie extends Fragment {
             public void onFailure(@NonNull Call<GenreListResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 Log.e("FragmentMovie", "Failed to load genres:  " + t.getMessage());
-                Toast.makeText(getContext(), "Failed to load genres:  " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Network error, Failed to load this app.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -373,8 +371,7 @@ public class FragmentMovie extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 isLoading = false;
                 Log.e("MovieFragment", "Error loading movies: " + t.getMessage());
-                Toast.makeText(getContext(), "Network error while loading movies: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+                }
         });
     }
 
@@ -415,7 +412,7 @@ public class FragmentMovie extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 isLoading = false;
                 Log.e("MovieFragment", "Error searching for movies: " + t.getMessage());
-                Toast.makeText(getContext(), "Network error during search: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Network error, Failed to load this app." + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

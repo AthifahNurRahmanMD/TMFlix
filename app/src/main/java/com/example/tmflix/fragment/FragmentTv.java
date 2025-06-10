@@ -209,7 +209,7 @@ public class FragmentTv extends Fragment implements
             @Override
             public void onFailure(@NonNull Call<GenreListResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Network error loading genres: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Network error, Failed to load this app.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -300,7 +300,6 @@ public class FragmentTv extends Fragment implements
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 isLoading = false;
-                Toast.makeText(getContext(), "Network error TV: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -335,8 +334,7 @@ public class FragmentTv extends Fragment implements
             @Override
             public void onFailure(Call<TVResponse> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Network error Now Playing TV: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+                }
         });
     }
 
@@ -382,7 +380,6 @@ public class FragmentTv extends Fragment implements
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 isLoading = false;
-                Toast.makeText(getContext(), "Network error during search: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
