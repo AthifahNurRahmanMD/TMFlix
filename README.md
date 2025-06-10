@@ -24,12 +24,15 @@ Aplikasi ini diciptakan dengan antarmuka modern, sederhana, dan responsif agar p
 
 ---
 
-#⚙️ Teknologi yang Digunakan
-**Bahasa Pemrograman**: Java (Android SDK)
-**API**: TMDB (The Movie Database) API
-**Penyimpanan Lokal**: SQLite
-**HTTP Client**:	Retrofit2
-**Manajemen Preferensi**:	SharedPreferences & SettingsPreferences
-**Navigasi	Android**: Navigation Component
-**Pemrosesan Gambar**: Glide
+## ⚙️ Teknologi yang Digunakan
+
+| Teknologi                  | Deskripsi                                        |
+|---------------------------|--------------------------------------------------|
+| **Bahasa Pemrograman**    | Java (Android SDK)                               |
+| **API**                   | TMDB (The Movie Database) API                    |
+| **Penyimpanan Lokal**     | SQLite                                           |
+| **HTTP Client**           | Retrofit2                                        |
+| **Manajemen Preferensi**  | SharedPreferences & SettingsPreferences           |
+| **Navigasi Android**      | Navigation Component                             |
+| **Pemrosesan Gambar**     | Glide                                            |
 ---
