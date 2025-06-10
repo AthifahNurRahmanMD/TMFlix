@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,6 +43,7 @@ public class TvHorizontalAdapter extends RecyclerView.Adapter<TvHorizontalAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ModelTv data = items.get(position);
+        holder.tvTitle.setText(data.getName());
 
         Glide.with(mContext)
                 .load(ApiConfig.URL_IMAGE + data.getBackdropPath())
@@ -50,7 +52,12 @@ public class TvHorizontalAdapter extends RecyclerView.Adapter<TvHorizontalAdapte
                         .transform(new RoundedCorners(16)))
                 .into(holder.imgPhoto);
 
-        holder.imgPhoto.setOnClickListener(v -> onSelectData.onSelected(data));
+        // Tambahkan listener klik di sini
+        holder.imgPhoto.setOnClickListener(v -> {
+            if (onSelectData != null) { // Pastikan interface tidak null
+                onSelectData.onSelected(data);
+            }
+        });
     }
 
     @Override
@@ -59,12 +66,14 @@ public class TvHorizontalAdapter extends RecyclerView.Adapter<TvHorizontalAdapte
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-
-        public ImageView imgPhoto;
+        ImageView imgPhoto;
+        TextView tvTitle;
 
         public ViewHolder(View itemView) {
             super(itemView);
             imgPhoto = itemView.findViewById(R.id.imgPhoto);
+            tvTitle = itemView.findViewById(R.id.tvTitle);
         }
+
     }
 }
