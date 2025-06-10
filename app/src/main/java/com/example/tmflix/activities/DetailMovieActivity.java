@@ -2,7 +2,6 @@ package com.example.tmflix.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-// import android.app.ProgressDialog; // Hapus import ProgressDialog
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,7 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar; // Tambahkan import ProgressBar
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -100,6 +99,7 @@ public class DetailMovieActivity extends AppCompatActivity {
         helper = new DatabaseHelper(this);
 
         modelMovie = (ModelMovie) getIntent().getSerializableExtra("detailMovie");
+
         if (modelMovie != null) {
 
             Id = modelMovie.getId();
@@ -117,14 +117,15 @@ public class DetailMovieActivity extends AppCompatActivity {
             tvRelease.setText(ReleaseDate);
             tvPopularity.setText(Popularity);
             tvOverview.setText(Overview);
+            //
             tvTitle.setSelected(true);
             tvName.setSelected(true);
-
             float newValue = (float) Rating;
             ratingBar.setNumStars(5);
             ratingBar.setStepSize(0.5f);
             ratingBar.setRating(newValue / 2);
             isFavorite = helper.isMovieFavorited(Id);
+            List<Integer> genreIds = modelMovie.getGenreIds();
             imgFavorite.setImageResource(isFavorite ? android.R.drawable.btn_star_big_on : android.R.drawable.btn_star_big_off);
 
             if (modelMovie.getGenreNames() != null && !modelMovie.getGenreNames().isEmpty()) {

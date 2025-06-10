@@ -215,16 +215,16 @@ public class FragmentMovie extends Fragment {
                     }
                     adapterHorizontal.notifyDataSetChanged();
                 } else {
-                    Log.e("FragmentMovie", "Gagal memuat Now Playing: " + response.message());
-                    Toast.makeText(getContext(), "Gagal memuat Now Playing: " + response.message(), Toast.LENGTH_SHORT).show();
+                    Log.e("FragmentMovie", "Failed to load Now Playing: " + response.message());
+                    Toast.makeText(getContext(), "Failed to load Now Playing: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Log.e("FragmentMovie", "Error memuat Now Playing: " + t.getMessage());
-                Toast.makeText(getContext(), "Error jaringan Now Playing: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e("FragmentMovie", "Network error while loading genres: " + t.getMessage());
+                Toast.makeText(getContext(), "Network error while loading genres: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -249,16 +249,17 @@ public class FragmentMovie extends Fragment {
                         addGenresToChipGroup(genres);
                     }
                 }else {
-                    Log.e("FragmentMovie", "Gagal memuat genre: " + response.message());
-                    Toast.makeText(getContext(), "Gagal memuat genre: " + response.message(), Toast.LENGTH_SHORT).show();
+                    Log.e("FragmentMovie", "Failed to load genres: " + response.message());
+                    Toast.makeText(getContext(), "Failed to load genres: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
+            // klo ndd koneksi internet
             @Override
             public void onFailure(@NonNull Call<GenreListResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Log.e("FragmentMovie", "Error memuat genre: " + t.getMessage());
-                Toast.makeText(getContext(), "Error jaringan genre: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("FragmentMovie", "Failed to load genres:  " + t.getMessage());
+                Toast.makeText(getContext(), "Failed to load genres:  " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -346,7 +347,7 @@ public class FragmentMovie extends Fragment {
                         listFilm.addAll(movies);
                         movieAdapter.notifyDataSetChanged();
                     } else {
-                        Toast.makeText(getContext(), "Tidak ada film yang ditemukan untuk genre ini.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "No movies found for this genre.", Toast.LENGTH_SHORT).show();
                         listFilm.clear();
                         movieAdapter.notifyDataSetChanged();
                     }
@@ -358,8 +359,8 @@ public class FragmentMovie extends Fragment {
                         btnLoadMore.setVisibility(View.GONE);
                     }
                 } else {
-                    Log.e("MovieFragment", "Gagal memuat film: " + response.message());
-                    Toast.makeText(getContext(), "Gagal memuat film: " + response.message(), Toast.LENGTH_SHORT).show();
+                    Log.e("MovieFragment", "Failed to load movies: " + response.message());
+                    Toast.makeText(getContext(), "Failed to load movies: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -367,8 +368,8 @@ public class FragmentMovie extends Fragment {
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 isLoading = false;
-                Log.e("MovieFragment", "Error memuat film: " + t.getMessage());
-                Toast.makeText(getContext(), "Error jaringan film: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("MovieFragment", "rror loading movies: " + t.getMessage());
+                Toast.makeText(getContext(), "Network error while loading movies: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -391,17 +392,17 @@ public class FragmentMovie extends Fragment {
                     if (response.body().getResults() != null && !response.body().getResults().isEmpty()) {
                         listFilm.addAll(response.body().getResults());
                         movieAdapter.notifyDataSetChanged();
-                        text_rekomendasi_film.setText("Hasil Pencarian untuk: " + query);
+                        text_rekomendasi_film.setText("Search Results for:: " + query);
                     } else {
-                        Toast.makeText(getContext(), "Tidak ada hasil pencarian untuk '" + query + "'.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "No search results for '" + query + "'.", Toast.LENGTH_SHORT).show();
                         listFilm.clear();
                         movieAdapter.notifyDataSetChanged();
-                        text_rekomendasi_film.setText("Tidak ada hasil. Coba kata kunci lain.");
+                        text_rekomendasi_film.setText("No results. Try another keyword.");
                     }
                     btnLoadMore.setVisibility(View.GONE);
                 } else {
-                    Log.e("MovieFragment", "Gagal mencari film: " + response.message());
-                    Toast.makeText(getContext(), "Gagal mencari film: " + response.message(), Toast.LENGTH_SHORT).show();
+                    Log.e("MovieFragment", "Failed to search movies: " + response.message());
+                    Toast.makeText(getContext(), "Failed to search movies: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -409,8 +410,8 @@ public class FragmentMovie extends Fragment {
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 isLoading = false;
-                Log.e("MovieFragment", "Error mencari film: " + t.getMessage());
-                Toast.makeText(getContext(), "Error jaringan pencarian: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("MovieFragment", "Error searching for movies: " + t.getMessage());
+                Toast.makeText(getContext(), "Network error during search: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -420,7 +421,7 @@ public class FragmentMovie extends Fragment {
             currentPage++;
             fetchMovies(currentSelectedGenreId);
         } else if (isSearching) {
-            Toast.makeText(getContext(), "Tidak bisa memuat lebih banyak saat mode pencarian aktif.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Cannot load more while search mode is active.", Toast.LENGTH_SHORT).show();
         }
     }
 

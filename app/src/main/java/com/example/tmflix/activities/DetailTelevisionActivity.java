@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -147,23 +146,23 @@ public class DetailTelevisionActivity extends AppCompatActivity {
             rvTrailer.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             getTrailer();
         } else {
-            Toast.makeText(this, "Gagal memuat detail TV. Data tidak ditemukan.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Failed to load TV details. Data not found.", Toast.LENGTH_LONG).show();
             finish();
         }
 
         imgFavorite.setOnClickListener(v -> {
             if (modelTV == null) {
-                Toast.makeText(this, "Tidak dapat menambah/menghapus favorit, data tidak lengkap.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Unable to add/remove favorite. Incomplete data.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (isFavorite) {
                 helper.deleteFavoriteTv(Id);
-                Toast.makeText(this, NameFilm + " dihapus dari favorit", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, NameFilm + " removed from favorites", Toast.LENGTH_SHORT).show();
                 imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
             } else {
                 helper.insertFavoriteTv(modelTV);
-                Toast.makeText(this, NameFilm + " ditambahkan ke favorit", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, NameFilm + " added to favorites", Toast.LENGTH_SHORT).show();
                 imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
             }
             isFavorite = !isFavorite;
@@ -183,17 +182,17 @@ public class DetailTelevisionActivity extends AppCompatActivity {
                     if (!modelTrailer.isEmpty()) {
                         showTrailer();
                     } else {
-                        Toast.makeText(DetailTelevisionActivity.this, "Trailer tidak ditemukan.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailTelevisionActivity.this, "Trailer not found.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(DetailTelevisionActivity.this, "Gagal menampilkan trailer.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailTelevisionActivity.this, "Failed to display trailer.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<TrailerResponse> call, Throwable t) {
                 progressBarTrailer.setVisibility(View.GONE);
-                Toast.makeText(DetailTelevisionActivity.this, "Koneksi gagal: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailTelevisionActivity.this, "Connection failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
