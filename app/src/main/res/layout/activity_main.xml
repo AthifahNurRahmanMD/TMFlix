@@ -13,7 +13,6 @@
         android:layout_height="990dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bg_diagonal_header" />
-    <!-- Kalau mau, kamu bisa bikin @drawable/bg_diagonal_header juga adaptif ke tema -->
 
     <!-- Toolbar -->
     <include layout="@layout/toolbar_main" />
