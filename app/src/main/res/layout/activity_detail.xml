@@ -7,7 +7,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/imgCover"
@@ -42,7 +42,7 @@
             android:marqueeRepeatLimit="marquee_forever"
             android:contentDescription="@string/judul_film"
             android:singleLine="true"
-            android:textColor="?attr/colorOnSurface"
+            android:textColor="?attr/colorOnError"
             android:textSize="18sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
@@ -50,13 +50,13 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:layout_below="@+id/toolbar"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
             android:orientation="vertical">
 
             <FrameLayout
@@ -133,7 +133,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="6dp"
                                     android:singleLine="true"
-                                    android:textColor="?attr/colorOnSurface"
+                                    android:textColor="?attr/colorSecondary"
                                     android:textSize="14sp" />
                             </LinearLayout>
 
@@ -284,10 +284,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/trailer"
-                android:textColor="?attr/colorOnSurface"
+                android:textColor="@color/traaaaiiler"
                 android:textSize="19sp"
                 android:textStyle="bold" />
 
