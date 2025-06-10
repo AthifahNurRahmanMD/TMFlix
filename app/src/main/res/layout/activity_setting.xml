@@ -27,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/setelan"
                     android:textColor="?attr/colorOnSurface"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
             </RelativeLayout>
@@ -39,11 +39,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="15dp"
         android:text="@string/Tema"
         android:textColor="?attr/colorOnSurface"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <!-- Theme Selection -->
@@ -85,26 +85,4 @@
         </RadioGroup>
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/ganti_bahasa_title"
-        android:textColor="?attr/colorOnSurface"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btnChangeLanguage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="25dp"
-        android:background="@drawable/bg_rounded_gantibahasa"
-        android:backgroundTint="@color/texttanggaldanpopuler"
-        android:text="@string/ganti_bahasa"
-        android:textColor="?attr/colorOnSurface"
-        android:textSize="14sp" />
-
 </LinearLayout>

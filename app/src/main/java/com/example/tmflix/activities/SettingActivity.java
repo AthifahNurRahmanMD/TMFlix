@@ -19,7 +19,6 @@ import com.example.tmflix.preference.SettingPreference;
 public class SettingActivity extends AppCompatActivity {
 
     private SettingPreference settingPreference;
-    private Button button;
     private Toolbar toolbar;
 
     // Theme components
@@ -34,7 +33,6 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        button = findViewById(R.id.btnChangeLanguage);
         toolbar = findViewById(R.id.toolbar);
 
         // Initialize theme components
@@ -53,12 +51,6 @@ public class SettingActivity extends AppCompatActivity {
         // Setup theme selector dan load theme
         setupThemeSelector();
         loadThemePreference();
-
-        // Tombol ganti bahasa
-        button.setOnClickListener(v -> {
-            Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
-            startActivity(mIntent);
-        });
     }
 
     private void setupThemeSelector() {
@@ -70,11 +62,11 @@ public class SettingActivity extends AppCompatActivity {
                 if (checkedId == R.id.rbDarkTheme) {
                     selectedTheme = "dark";
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    Toast.makeText(getApplicationContext(), "Tema gelap diaktifkan", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Dark theme enabled", Toast.LENGTH_SHORT).show();
                 } else {
                     selectedTheme = "light";
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    Toast.makeText(getApplicationContext(), "Tema terang diaktifkan", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "light theme enabled", Toast.LENGTH_SHORT).show();
                 }
                 settingPreference.setSelectedTheme(selectedTheme);
             });
