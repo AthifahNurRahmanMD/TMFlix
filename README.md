@@ -1,6 +1,6 @@
 # 🎬 TMFlix
 
-Selamat datang di **TMFlix** – aplikasi katalog film yang dirancang khusus untuk para penikmat film dan pengembang muda!  
+Selamat datang di **TMFlix** – aplikasi katalog film yang dirancang khusus untuk para penikmat film!  
 Dengan **TMFlix**, Anda dapat menjelajahi dunia sinema, menemukan film-film populer, membaca deskripsi singkat, mengecek rating, hingga menonton cuplikan film langsung dari perangkat Android Anda.  
 Aplikasi ini diciptakan dengan antarmuka modern, sederhana, dan responsif agar pengalaman mencari film menjadi lebih menyenangkan.
 
