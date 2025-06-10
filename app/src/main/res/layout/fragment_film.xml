@@ -25,25 +25,24 @@
             android:id="@+id/rvNowPlaying"
             android:layout_width="match_parent"
             android:layout_height="183dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="5dp"
             android:contentDescription="@string/description_of_thefilm_horizontal"
             tools:listitem="@layout/list_item_film_horizontal" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="20dp">
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchFilm"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:iconifiedByDefault="false"
-                android:paddingStart="3dp"
+                android:paddingStart="1dp"
                 android:paddingEnd="3dp"
                 android:searchIcon="@drawable/ic_search"
                 android:queryHint="@string/search_film"
@@ -53,7 +52,7 @@
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="5dp"
             android:scrollbars="none">
 
             <com.google.android.material.chip.ChipGroup

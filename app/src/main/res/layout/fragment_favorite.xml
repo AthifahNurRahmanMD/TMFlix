@@ -9,19 +9,19 @@
         android:id="@+id/tabFavorite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:scrollbars="horizontal"
         android:background="@drawable/bg_diagonal_header2"
         app:tabIndicatorColor="@color/darklight_red"
         app:tabIndicatorHeight="5dp"
         app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/lil_dark_red"
-        app:tabTextColor="@color/gantibahasa_buttondark" />
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/dark" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vpFavorite"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tabFavorite" />
+        android:layout_below="@+id/tabFavorite" />
 
 </RelativeLayout>
