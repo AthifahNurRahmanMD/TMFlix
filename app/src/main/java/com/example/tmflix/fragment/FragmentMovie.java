@@ -47,28 +47,22 @@ import retrofit2.Response;
 
 public class FragmentMovie extends Fragment {
 
-    // Recycler untuk daftar film dan now playing (horizontal)
     private RecyclerView rvFilmRecommend, rvNowPlaying;
     private MovieAdapter movieAdapter;
     private MovieHorizontalAdapter adapterHorizontal;
-    // List data film n genre
     private List<ModelMovie> listFilm = new ArrayList<>();
     private List<ModelMovie> listFilmHorizontal = new ArrayList<>();
     private Map<Integer, String> genreMap = new HashMap<>();
-
-    // Button untuk load more
     private Button btnLoadMore;
     private ProgressBar progressBar;
     private int currentPage = 1;
     private boolean isLoading = false;
-    private boolean isSearching = false; // Flag apakah sedang mode pencarian
-
+    private boolean isSearching = false;
     private TextView text_rekomendasi_film;
     private SearchView searchFilm;
     private EditText searchEditText;
     private ChipGroup chipGroupGenres;
-
-    private int currentSelectedGenreId = 0; // ID genre yang sedang aktif (0 = "All")
+    private int currentSelectedGenreId = 0;
 
 
     @Nullable
@@ -100,9 +94,9 @@ public class FragmentMovie extends Fragment {
         });
         rvNowPlaying.setAdapter(adapterHorizontal);
         // Snap ke tengah saat scroll
-        new LinearSnapHelper().attachToRecyclerView(rvNowPlaying);
+         new LinearSnapHelper().attachToRecyclerView(rvNowPlaying);
 
-        // SearchView setup
+         // SearchView setup
         searchFilm = view.findViewById(R.id.searchFilm);
         searchFilm.setIconifiedByDefault(false);
         searchFilm.setQueryHint(getString(R.string.search_film));
@@ -252,7 +246,7 @@ public class FragmentMovie extends Fragment {
                     if (response.isSuccessful() && response.body() != null) {
                     List<Genre> genres = response.body().getGenres();
                     if (genres != null) {
-                        genreMap.clear(); // SIMPAN MAP GENRE
+                        genreMap.clear();
                         for (Genre genre : genres) {
                             genreMap.put(genre.getId(), genre.getName());
                         }
@@ -378,7 +372,7 @@ public class FragmentMovie extends Fragment {
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 isLoading = false;
-                Log.e("MovieFragment", "rror loading movies: " + t.getMessage());
+                Log.e("MovieFragment", "Error loading movies: " + t.getMessage());
                 Toast.makeText(getContext(), "Network error while loading movies: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -402,7 +396,7 @@ public class FragmentMovie extends Fragment {
                     if (response.body().getResults() != null && !response.body().getResults().isEmpty()) {
                         listFilm.addAll(response.body().getResults());
                         movieAdapter.notifyDataSetChanged();
-                        text_rekomendasi_film.setText("Search Results for:: " + query);
+                        text_rekomendasi_film.setText("Search Results for: " + query);
                     } else {
                         Toast.makeText(getContext(), "No search results for '" + query + "'.", Toast.LENGTH_SHORT).show();
                         listFilm.clear();
