@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,6 +44,7 @@ public class MovieHorizontalAdapter extends RecyclerView.Adapter<MovieHorizontal
     @Override
     public void onBindViewHolder(MovieHorizontalAdapter.ViewHolder holder, int position) {
         final ModelMovie data = items.get(position);
+        holder.tvTitle.setText(data.getTitle());
 
         Glide.with(mContext)
                 .load(ApiConfig.URL_IMAGE + data.getBackdropPath())
@@ -66,10 +68,12 @@ public class MovieHorizontalAdapter extends RecyclerView.Adapter<MovieHorizontal
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgPhoto;
+        TextView tvTitle;
 
         public ViewHolder(View itemView) {
             super(itemView);
             imgPhoto = itemView.findViewById(R.id.imgPhoto);
+            tvTitle = itemView.findViewById(R.id.tvTitle);
         }
     }
 }
